@@ -22,8 +22,16 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.landingPage');
 });
+
+Route::get('/login', function () {
+    return view('auth.login');
+});
+
+// Route::get('/login', function () {
+//     return view('welcome');
+// });
 
 
 // Route::get('/', [AuthenticatedSessionController::class, 'create'])
@@ -40,9 +48,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return view('layouts.admin');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/admin', function () {
+//     return view('layouts.admin');
+// })->middleware(['auth'])->name('admin');
+
+Route::get('/landingPage', function () {
+    return view('layouts.landingPage');
+})->name('landingPage');
 
 
 Route::middleware(['auth' , 'admin'])->name('admin.')->prefix('admin')->group(function(){
@@ -54,6 +66,8 @@ Route::middleware(['auth' , 'admin'])->name('admin.')->prefix('admin')->group(fu
     Route::resource('/reservation' , ReservationController::class);
     Route::resource('/table' , TableController::class);
     Route::resource('/user' , UserController::class);
+    Route::get('/user/{user}' , [UserController::class , 'destroy'])->name('user-destroy');
+    Route::get('/user/{user}' , [UserController::class , 'update'])->name('user-update');
 });
 
 

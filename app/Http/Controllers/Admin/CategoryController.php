@@ -97,9 +97,7 @@ class CategoryController extends Controller
      */
     public function edit($category)
     {
-        // dd($category);
         $cat = Category::find($category);
-        // dd($cat);
         return view('admin.categories.edit' , ['cat'=>$cat]);
     }
 
@@ -112,18 +110,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category)
     {
-        // $image = $request->file('image')->getClientOriginalName();
-        // $request->file('image')->storeAs('public/image', $image);
+        $image = $request->file('image')->getClientOriginalName();
+        $request->file('image')->storeAs('public/image', $image);
 
-        dd($category);
-        // Category::where('id' , $category)->update([
-        //     'image' => $image,
-        //     'name' => $request->input('name'),
-        //     'description' => $request->input('description'),
-        //     'tables_number' => $request->input('tables_number'),
-        //     ]);
+        // dd($category);
+        Category::where('id' , $category)->update([
+            'image' => $image,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'tables_number' => $request->input('tables_number'),
+            ]);
 
-        // return redirect('admin/category');
+        return redirect('admin/category');
     }
 
     /**
